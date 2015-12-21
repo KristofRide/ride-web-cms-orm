@@ -270,12 +270,12 @@ class ContentDetailWidget extends AbstractWidget implements StyleWidget {
      * @param \ride\library\cms\content\Content $content
      * @return \ride\library\mvc\view\View
      */
-    protected function setView(ContentProperties $contentProperties, $content) {
+    protected function setView(ContentProperties $contentProperties, $result) {
         $template = $this->getTemplate(static::TEMPLATE_NAMESPACE . '/default');
         $variables = array(
             'locale' => $this->locale,
             'widgetId' => $this->id,
-            'content' => $content,
+            'result' => $result,
             'properties' => $contentProperties,
         );
 

@@ -50,8 +50,8 @@ class ContentEntryWidget extends ContentDetailWidget {
      */
     public function indexAction(OrmManager $orm, ContentService $contentService, I18n $i18n, ReflectionHelper $reflectionHelper, $id = null) {
         $contentProperties = $this->getContentProperties();
-        $id = $contentProperties->getEntryId();
-        if ($id === null) {
+        $ids = $contentProperties->getEntryIds();
+        if ($ids === null) {
             return;
         }
 
@@ -65,29 +65,34 @@ class ContentEntryWidget extends ContentDetailWidget {
         $this->entryFormatter = $orm->getEntryFormatter();
         $this->model = $orm->getModel($modelName);
 
-        $query = $this->getModelQuery($contentProperties, $this->locale, $id);
+        $result = null;
+        foreach ($contentProperties->getEntryIds() as $index => $id) {
+            $query = $this->getModelQuery($contentProperties, $this->locale, $id);
 
-        $content = $this->getResult($contentProperties, $contentService, $query);
-        if ($content && $content->data instanceof LocalizedEntry && !$content->data->isLocalized() && !$contentProperties->getIncludeUnlocalized()) {
-            $content = null;
+            $content = $this->getResult($contentProperties, $contentService, $query);
+            if ($content && $content->data instanceof LocalizedEntry && !$content->data->isLocalized() && !$contentProperties->getIncludeUnlocalized()) {
+                $content = null;
+            }
+
+            if (!$content) {
+                return;
+            }
+
+           $result[] =  $content; //$this->setContext('orm.entry.' . $id, $content);
+
+        }
+        if (array_count_values($contentProperties->getEntryIds()) == 1) {
+            if ($contentProperties->getBreadcrumb()) {
+                $url = $this->request->getBaseScript() . $this->properties->getNode()->getRoute($this->locale) . '/' . $id;
+                $this->addBreadcrumb($url, $content->title);
+            }
+
+            if ($contentProperties->getTitle()) {
+                $this->setPageTitle($content->title);
+            }
         }
 
-        if (!$content) {
-            return;
-        }
-
-        $this->setContext('orm.entry.' . $this->id, $content);
-
-        if ($contentProperties->getBreadcrumb()) {
-            $url = $this->request->getBaseScript() . $this->properties->getNode()->getRoute($this->locale) . '/' . $id;
-            $this->addBreadcrumb($url, $content->title);
-        }
-
-        if ($contentProperties->getTitle()) {
-            $this->setPageTitle($content->title);
-        }
-
-        $this->setView($contentProperties, $content);
+        $this->setView($contentProperties, $result);
 
         if ($this->properties->getWidgetProperty('region')) {
             $this->setIsRegion(true);
@@ -114,7 +119,10 @@ class ContentEntryWidget extends ContentDetailWidget {
         }
 
         $preview = '<strong>' . $translator->translate('label.model') . '</strong>: ' . $modelName . '<br />';
-        $preview .= '<strong>' . $translator->translate('label.entry') . '</strong>: #' . $contentProperties->getEntryId() . '<br />';
+        if ($contentProperties->getEntryIds()) {
+            $ids = implode (",", $contentProperties->getEntryIds());
+            $preview .= '<strong>' . $translator->translate('label.entries') . '</strong>: #' . $ids . '<br />';
+        }
 
         $fields = $contentProperties->getModelFields();
         if ($fields) {

@@ -50,7 +50,7 @@ class ContentEntryWidget extends ContentDetailWidget {
      */
     public function indexAction(OrmManager $orm, ContentService $contentService, I18n $i18n, ReflectionHelper $reflectionHelper, $id = null) {
         $contentProperties = $this->getContentProperties();
-        $ids = $contentProperties->getEntryIds();
+        $ids = $contentProperties->getEntriesId();
         if ($ids === null) {
             return;
         }
@@ -66,7 +66,7 @@ class ContentEntryWidget extends ContentDetailWidget {
         $this->model = $orm->getModel($modelName);
 
         $result = null;
-        foreach ($contentProperties->getEntryIds() as $index => $id) {
+        foreach ($contentProperties->getEntriesId() as $index => $id) {
             $query = $this->getModelQuery($contentProperties, $this->locale, $id);
 
             $content = $this->getResult($contentProperties, $contentService, $query);
@@ -81,7 +81,9 @@ class ContentEntryWidget extends ContentDetailWidget {
            $result[] =  $content; //$this->setContext('orm.entry.' . $id, $content);
 
         }
-        if (array_count_values($contentProperties->getEntryIds()) == 1) {
+        $this->setContext('result', $result);
+
+        if (array_count_values($contentProperties->getEntriesId()) == 1) {
             if ($contentProperties->getBreadcrumb()) {
                 $url = $this->request->getBaseScript() . $this->properties->getNode()->getRoute($this->locale) . '/' . $id;
                 $this->addBreadcrumb($url, $content->title);
@@ -119,9 +121,9 @@ class ContentEntryWidget extends ContentDetailWidget {
         }
 
         $preview = '<strong>' . $translator->translate('label.model') . '</strong>: ' . $modelName . '<br />';
-        if ($contentProperties->getEntryIds()) {
-            $ids = implode (",", $contentProperties->getEntryIds());
-            $preview .= '<strong>' . $translator->translate('label.entries') . '</strong>: #' . $ids . '<br />';
+        if ($contentProperties->getEntriesId()) {
+            $ids = implode (",", $contentProperties->getEntriesId());
+            $preview .= '<strong>' . $translator->translate('label.entries') . '</strong>: ' . $ids . '<br />';
         }
 
         $fields = $contentProperties->getModelFields();

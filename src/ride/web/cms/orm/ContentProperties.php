@@ -278,7 +278,7 @@ class ContentProperties {
      * Id's of the entries to select
      * @var array
      */
-    private $entryIds;
+    private $entriesId;
 
     /**
      * Recursive depth for the relations of the model
@@ -514,20 +514,25 @@ class ContentProperties {
     }
 
     /**
-     * Sets the entry to show
+     * Sets the entries to show
      * @param integer $entryId Id of the entry
      * @return null
      */
-    public function setEntryIds(array $entryIds) {
-        $this->entryIds = implode(",", $entryIds);
+    public function setEntriesId(array $entriesId) {
+        $this->entriesId = implode(",", $entriesId);
     }
 
     /**
-     * Gets the entry to show
-     * @return integer Id of the entry
+     * Gets the entries to show
+     * @return array with id of the entries
      */
-    public function getEntryIds() {
-        return explode(",", $this->entryIds);
+    public function getEntriesId() {
+        $ids = explode(",", $this->entriesId);
+        $resultArray = array();
+        foreach ($ids as $id) {
+            $resultArray[$id] = $id;
+        }
+        return $resultArray;
     }
 
     /**
@@ -1100,7 +1105,7 @@ class ContentProperties {
      */
     public function getFromWidgetProperties(WidgetProperties $properties, $locale) {
         $this->modelName = $properties->getWidgetProperty(self::PROPERTY_MODEL_NAME);
-        $this->entryIds = $properties->getWidgetProperty(self::PROPERTY_ENTRY);
+        $this->entriesId = $properties->getWidgetProperty(self::PROPERTY_ENTRY);
         $this->recursiveDepth = $properties->getWidgetProperty(self::PROPERTY_RECURSIVE_DEPTH);
         $this->includeUnlocalized = $properties->getWidgetProperty(self::PROPERTY_INCLUDE_UNLOCALIZED);
         $this->isPaginationEnabled = $properties->getWidgetProperty(self::PROPERTY_PAGINATION_ENABLE);
@@ -1179,7 +1184,7 @@ class ContentProperties {
         }
 
         $properties->setWidgetProperty(self::PROPERTY_MODEL_NAME, $this->modelName);
-        $properties->setWidgetProperty(self::PROPERTY_ENTRY, $this->entryIds);
+        $properties->setWidgetProperty(self::PROPERTY_ENTRY, $this->entriesId);
         $properties->setWidgetProperty(self::PROPERTY_MODEL_FIELDS, $fields);
         $properties->setWidgetProperty(self::PROPERTY_RECURSIVE_DEPTH, $this->recursiveDepth);
         $properties->setWidgetProperty(self::PROPERTY_INCLUDE_UNLOCALIZED, $this->includeUnlocalized);

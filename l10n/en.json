@@ -15,6 +15,8 @@
     "label.content.overview.filter.single": "Single related value",
     "label.depth.recursive": "Recursive depth",
     "label.depth.recursive.description": "Select how many levels the relations will be fetched.",
+    "label.entries": "Entries",
+    "label.entries.description": "Select the entries for this node",
     "label.entry": "Entry",
     "label.entry.name.description": "Enter the name of this entry node",
     "label.entry.description": "Select the entry for this node",

@@ -88,6 +88,9 @@ class ContentDetailWidget extends AbstractWidget implements StyleWidget {
         $this->model = $orm->getModel($modelName);
 
         $query = $this->getModelQuery($contentProperties, $this->locale, $id);
+        if ($contentProperties->getCondition()) {
+            $query->addCondition($contentProperties->getCondition());
+        }
         $content = $this->getResult($contentProperties, $contentService, $query);
 
         if (!$content && $contentProperties->getIncludeUnlocalized()) {
@@ -276,6 +279,7 @@ class ContentDetailWidget extends AbstractWidget implements StyleWidget {
             'locale' => $this->locale,
             'widgetId' => $this->id,
             'result' => $result,
+            'content' => $result,
             'properties' => $contentProperties,
         );
 
@@ -365,6 +369,11 @@ class ContentDetailWidget extends AbstractWidget implements StyleWidget {
         $recursiveDepth = $contentProperties->getRecursiveDepth();
         if ($recursiveDepth) {
             $preview .= '<strong>' . $translator->translate('label.depth.recursive') . '</strong>: ' . $recursiveDepth . '<br />';
+        }
+
+        $condition = $contentProperties->getCondition();
+        if ($condition) {
+            $preview .= '<strong>' . $translator->translate('label.condition') . '</strong>: ' . $condition . '<br />';
         }
 
         $includeUnlocalized = $contentProperties->getIncludeUnlocalized();

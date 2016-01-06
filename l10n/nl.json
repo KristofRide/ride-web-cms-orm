@@ -1,4 +1,5 @@
 {
+    "error.validation.maximum.array": "Het maximum aantal geselecteerde entries is %maximum%",
     "label.breadcrumb.add": "Breadcrumb",
     "label.breadcrumb.add.description": "Toon deze entry in de breadcrumbs",
     "label.condition": "Voorwaarde",
@@ -17,6 +18,8 @@
     "label.depth.recursive.description": "Selecteer de diepte de gerelateerde data die moet worden opgehaald",
     "label.entries": "Entries",
     "label.entries.description": "Selecteer de entries voor deze node",
+    "label.entries.maximum": "Maximum",
+    "label.entries.maximum.description": "Maximum aantal getoonde Entries",
     "label.entry": "Entry",
     "label.entry.description": "Selecteer de entry voor deze node",
     "label.entry.name.description": "Geef de naam van deze entry node",
@@ -105,6 +108,7 @@
     "permission.cms.widget.orm.detail.visibility": "Data detail widget zichtbaarheid aanpassen",
     "permission.cms.widget.orm.entry.cache": "Date entry widget cache instellen",
     "permission.cms.widget.orm.entry.manage": "Entry widget kunnen toevoegen/verwijderen",
+    "permission.cms.widget.orm.entry.maximum": "Maximum aantal getoonde entries aanpassen",
     "permission.cms.widget.orm.entry.properties": "Data entry overzicht eigenschappen aanpassen",
     "permission.cms.widget.orm.entry.style": "Extra style classes toevoegen aan data entry widget",
     "permission.cms.widget.orm.entry.visibility": "Date entry widget zichtbaarheid aanpassen",

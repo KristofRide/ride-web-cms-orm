@@ -20,6 +20,7 @@ class ContentDetailComponent extends AbstractContentComponent {
         }
 
         $result = parent::parseSetData($data);
+        $result['condition'] = $data->getCondition();
         $result['field-id'] = $data->getIdField();
         $result['primary'] = $data->isPrimaryMapper();
         $result['title'] = $data->getTitle();
@@ -38,6 +39,7 @@ class ContentDetailComponent extends AbstractContentComponent {
      */
     public function parseGetData(array $data) {
         $result = parent::parseGetData($data);
+        $result->setCondition($data['condition']);
         $result->setIdField($data['field-id']);
         $result->setTitle($data['title']);
         $result->setIsPrimaryMapper($data['primary']);
@@ -69,6 +71,15 @@ class ContentDetailComponent extends AbstractContentComponent {
         }
 
         $fieldIdOptions = $this->fieldService->getUniqueFields($modelName);
+
+        $orm = $this->fieldService->getOrm();
+        $securityManager = $orm->getDependencyInjector()->get('ride\\library\\security\\SecurityManager');
+        if ($securityManager->isPermissionGranted('cms.widget.orm.entry.options')) {
+            $builder->addRow('condition', 'text', array(
+                'label' => $translator->translate('label.condition'),
+                'description' => $translator->translate('label.condition.description'),
+            ));
+        }
 
         $builder->addRow('field-id', 'select', array(
             'label' => $translator->translate('label.field.id'),

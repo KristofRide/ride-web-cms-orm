@@ -126,6 +126,11 @@ class ContentEntryWidget extends ContentDetailWidget {
             $preview .= '<strong>' . $translator->translate('label.entries') . '</strong>: ' . $ids . '<br />';
         }
 
+        $maximum = $contentProperties->getMaximum();
+        if ($maximum) {
+             $preview .= '<strong>' . $translator->translate('label.entries.maximum') . '</strong>: ' . $maximum . '<br />';
+        }
+
         $fields = $contentProperties->getModelFields();
         if ($fields) {
             $preview .= '<strong>' . $translator->translate('label.fields') . '</strong>: ' . implode(', ', $fields) . '<br />';

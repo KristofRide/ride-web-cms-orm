@@ -36,6 +36,8 @@ class ContentEntryComponent extends AbstractContentComponent {
 
         $result = parent::parseSetData($data);
         $result['entries'] = $data->getEntriesId();
+        $result['maximum'] = $data->getMaximum();
+        $result['condition'] = $data->getCondition();
         $result['title'] = $data->getTitle();
         $result['breadcrumb'] = $data->getBreadcrumb();
 
@@ -48,8 +50,11 @@ class ContentEntryComponent extends AbstractContentComponent {
      * @return mixed $data
      */
     public function parseGetData(array $data) {
+
         $result = parent::parseGetData($data);
         $result->setEntriesId($data['entries']);
+        $result->setMaximum($data['maximum']);
+        $result->setCondition($data['condition']);
         $result->setTitle($data['title']);
         $result->setBreadcrumb($data['breadcrumb']);
 
@@ -79,15 +84,45 @@ class ContentEntryComponent extends AbstractContentComponent {
         $entryOptions = array('' => '---');
         $model = $orm->getModel($modelName);
 
-        $entries = $model->find(null, $this->locale);
+        //$entries = $model->find(null, $this->locale);
+        $query = $model->createQuery($this->locale);
+        if ($data->getCondition()) {
+            $query->addCondition($data->getCondition());
+        }
+        $entries = $query->query();
         $entryOptions += $model->getOptionsFromEntries($entries);
 
+        $maximum = $data->getMaximum();
+        if (!$maximum) {
+            $maximum = 1;
+        }
         $builder->addRow('entries', 'select', array(
             'label' => $translator->translate('label.entries'),
             'description' => $translator->translate('label.entries.description'),
+            'validators' => array(
+              'size' => array(
+                  'maximum' => $maximum
+              )
+            ),
             'options' => $entryOptions,
             'multiple' => true
         ));
+        $securityManager = $orm->getDependencyInjector()->get('ride\\library\\security\\SecurityManager');
+        if ($securityManager->isPermissionGranted('cms.widget.orm.entry.options')) {
+            $builder->addRow('maximum', 'select', array(
+                'label' => $translator->translate('label.entries.maximum'),
+                'description' => $translator->translate('label.entries.maximum.description'),
+                'validators' => array(
+                    'required' => array()
+                ),
+                'default' => 1,
+                'options' => $this->getNumericOptions(1, 50),
+            ));
+            $builder->addRow('condition', 'text', array(
+                'label' => $translator->translate('label.condition'),
+                'description' => $translator->translate('label.condition.description'),
+            ));
+        }
         $builder->addRow('breadcrumb', 'boolean', array(
             'label' => $translator->translate('label.breadcrumb.add'),
             'description' => $translator->translate('label.breadcrumb.add.description'),

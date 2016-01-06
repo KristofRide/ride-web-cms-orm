@@ -83,7 +83,7 @@ class ContentEntryWidget extends ContentDetailWidget {
         }
         $this->setContext('result', $result);
 
-        if (array_count_values($contentProperties->getEntriesId()) == 1) {
+        if (count($contentProperties->getEntriesId()) == 1) {
             if ($contentProperties->getBreadcrumb()) {
                 $url = $this->request->getBaseScript() . $this->properties->getNode()->getRoute($this->locale) . '/' . $id;
                 $this->addBreadcrumb($url, $content->title);

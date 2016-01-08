@@ -39,6 +39,7 @@ class ContentEntryComponent extends AbstractContentComponent {
         $result['maximum'] = $data->getMaximum();
         $result['condition'] = $data->getCondition();
         $result['title'] = $data->getTitle();
+        $result['titleString'] = $data->getTitleString();
         $result['breadcrumb'] = $data->getBreadcrumb();
 
         return $result;
@@ -56,6 +57,7 @@ class ContentEntryComponent extends AbstractContentComponent {
         $result->setMaximum($data['maximum']);
         $result->setCondition($data['condition']);
         $result->setTitle($data['title']);
+        $result->setTitleString($data['titleString']);
         $result->setBreadcrumb($data['breadcrumb']);
 
         return $result;
@@ -130,6 +132,9 @@ class ContentEntryComponent extends AbstractContentComponent {
         $builder->addRow('title', 'boolean', array(
             'label' => $translator->translate('label.title'),
             'description' => $translator->translate('label.title.content.description'),
+        ));
+        $builder->addRow('titleString', 'string', array(
+            'label' => $translator->translate('label.title.string')
         ));
     }
 

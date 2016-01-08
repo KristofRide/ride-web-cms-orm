@@ -616,6 +616,7 @@ class ContentOverviewWidget extends AbstractWidget implements StyleWidget {
         ));
         $view->addJavascript('js/cms/orm.js');
         $view->addInlineJavascript('joppaContentInitializeOverviewProperties("' . $orderFieldsAction . '", "' . $filterFieldsAction . '", "' . $modelMappersAction . '");');
+        $form = $form->processView($view);
 
         return false;
     }

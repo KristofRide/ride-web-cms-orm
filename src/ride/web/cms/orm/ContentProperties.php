@@ -206,6 +206,11 @@ class ContentProperties {
      * @var string
      */
     const PROPERTY_TITLE = 'title';
+    /**
+     * Name of the title string
+     * @var string
+     */
+    const PROPERTY_TITLE_STRING = 'titleString';
 
     /**
      * Name of the meta og setting
@@ -446,6 +451,11 @@ class ContentProperties {
      * @var string
      */
     private $title;
+    /**
+     * Optional custom title for the view
+     * @var string
+     */
+    private $titleString;
 
     /**
      * Return a view when the result is empty
@@ -1005,6 +1015,23 @@ class ContentProperties {
      */
     public function getTitle() {
         return $this->title;
+    }
+
+    /**
+     * Sets the custom title for the view
+     * @param string $title
+     * @return null
+     */
+    public function setTitleString($titleString) {
+        $this->titleString = $titleString;
+    }
+
+    /**
+     * Gets the custom title for the view
+     * @return string
+     */
+    public function getTitleString() {
+        return $this->titleString;
     }
 
     /**

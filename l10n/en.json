@@ -117,5 +117,6 @@
     "warning.cms.text.used": "This text is also used in one or more other text blocks. Changing this text will affect those blocks as well.",
     "widget.orm.detail": "Content Detail",
     "widget.orm.entry": "Content Entry",
-    "widget.orm.overview": "Content Overview"
+    "widget.orm.overview": "Content Overview",
+    "label.title.string": "Title"
     }

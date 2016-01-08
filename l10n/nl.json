@@ -135,5 +135,6 @@
     "warning.cms.text.used": "Deze tekst wordt ook gebruikt in andere tekst blokken. Het wijzigen van deze tekst zal ook die blokken treffen.",
     "widget.orm.detail": "Data detail",
     "widget.orm.entry": "Data Entry",
-    "widget.orm.overview": "Data overzicht"
+    "widget.orm.overview": "Data overzicht",
+    "label.title.string": "Titel"
 }

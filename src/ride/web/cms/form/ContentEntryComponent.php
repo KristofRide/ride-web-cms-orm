@@ -111,20 +111,26 @@ class ContentEntryComponent extends AbstractContentComponent {
         ));
         $securityManager = $orm->getDependencyInjector()->get('ride\\library\\security\\SecurityManager');
         if ($securityManager->isPermissionGranted('cms.widget.orm.entry.options')) {
-            $builder->addRow('maximum', 'select', array(
-                'label' => $translator->translate('label.entries.maximum'),
-                'description' => $translator->translate('label.entries.maximum.description'),
-                'validators' => array(
-                    'required' => array()
-                ),
-                'default' => 1,
-                'options' => $this->getNumericOptions(1, 50),
-            ));
-            $builder->addRow('condition', 'text', array(
-                'label' => $translator->translate('label.condition'),
-                'description' => $translator->translate('label.condition.description'),
-            ));
+            $typeMaximum = 'select';
+            $typeCondition = 'text';
+        } else {
+            $typeMaximum = 'hidden';
+            $typeCondition = 'hidden';
         }
+        $builder->addRow('maximum', $typeMaximum, array(
+            'label' => $translator->translate('label.entries.maximum'),
+            'description' => $translator->translate('label.entries.maximum.description'),
+            'validators' => array(
+                'required' => array()
+            ),
+            'default' => 1,
+            'options' => $this->getNumericOptions(1, 50),
+        ));
+        $builder->addRow('condition', $typeCondition, array(
+            'label' => $translator->translate('label.condition'),
+            'description' => $translator->translate('label.condition.description'),
+        ));
+
         $builder->addRow('breadcrumb', 'boolean', array(
             'label' => $translator->translate('label.breadcrumb.add'),
             'description' => $translator->translate('label.breadcrumb.add.description'),

@@ -1,6 +1,6 @@
 {include file="base/form.prototype"}
 
-<form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" role="form">
+<form id="{$form->getId()}" class="form-horizontal form--selectize" action="{$app.url.request}" method="POST" role="form">
     <div class="form__group">
         <div class="tabbable">
             <ul class="tabs">
@@ -12,6 +12,9 @@
                 <div id="tabQuery" class="tabs__pane active">
                     {call formRow form=$form row="model"}
                     {call formRow form=$form row="entries"}
+
+                    {call formRow form=$form row="maximum"}
+                    {call formRow form=$form row="condition"}
                     {call formRow form=$form row="include-unlocalized"}
                 </div>
 
@@ -19,6 +22,7 @@
                     {call formRow form=$form row="template"}
                     {call formRow form=$form row="view-processor"}
                     {call formRow form=$form row="title"}
+                    {call formRow form=$form row="titleString"}
                     {call formRow form=$form row="breadcrumb"}
 
                     <h4>{translate key="title.formats.data"}</h4>

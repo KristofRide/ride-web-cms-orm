@@ -123,7 +123,7 @@ class ContentEntryComponent extends AbstractContentComponent {
             'validators' => array(
                 'required' => array()
             ),
-            'default' => 1,
+            'default' => 50,
             'options' => $this->getNumericOptions(1, 50),
         ));
         $builder->addRow('condition', $typeCondition, array(

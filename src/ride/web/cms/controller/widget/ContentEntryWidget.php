@@ -81,7 +81,7 @@ class ContentEntryWidget extends ContentDetailWidget {
            $result[] =  $content; //$this->setContext('orm.entry.' . $id, $content);
 
         }
-        $this->setContext('result', $result);
+        $this->setContext('result.' . $id, $result);
 
         if (array_count_values($contentProperties->getEntriesId()) == 1) {
             if ($contentProperties->getBreadcrumb()) {

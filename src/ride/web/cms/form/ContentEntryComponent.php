@@ -92,7 +92,15 @@ class ContentEntryComponent extends AbstractContentComponent {
             $query->addCondition($data->getCondition());
         }
         $entries = $query->query();
+
         $entryOptions += $model->getOptionsFromEntries($entries);
+        $entries = $data->getEntriesId();
+        foreach ($entries as $entry) {
+            if(!key_exists($entry, $entryOptions)) {
+                unset($entries[$entry]);
+            }
+         }
+        $data->setEntriesId($entries);
 
         $maximum = $data->getMaximum();
         if (!$maximum) {
@@ -123,7 +131,7 @@ class ContentEntryComponent extends AbstractContentComponent {
             'validators' => array(
                 'required' => array()
             ),
-            'default' => 50,
+            'default' => 1,
             'options' => $this->getNumericOptions(1, 50),
         ));
         $builder->addRow('condition', $typeCondition, array(

@@ -1006,7 +1006,7 @@ class ContentProperties {
      * @return null
      */
     public function setTitle($title) {
-        $this->title = $title;
+        $this->titleString = $title;
     }
 
     /**
@@ -1014,7 +1014,7 @@ class ContentProperties {
      * @return string
      */
     public function getTitle() {
-        return $this->title;
+        return $this->titleString;
     }
 
     /**
@@ -1179,7 +1179,7 @@ class ContentProperties {
         $this->contentTeaserFormat = $properties->getWidgetProperty(self::PROPERTY_FORMAT_TEASER);
         $this->contentImageFormat = $properties->getWidgetProperty(self::PROPERTY_FORMAT_IMAGE);
         $this->contentDateFormat = $properties->getWidgetProperty(self::PROPERTY_FORMAT_DATE);
-        $this->title = $properties->getLocalizedWidgetProperty($locale, self::PROPERTY_TITLE);
+        $this->titleString = $properties->getLocalizedWidgetProperty($locale, self::PROPERTY_TITLE);
         $this->emptyResultView = $properties->getWidgetProperty(self::PROPERTY_EMPTY_RESULT_VIEW, true);
         $this->emptyResultMessage = $properties->getLocalizedWidgetProperty($locale, self::PROPERTY_EMPTY_RESULT_MESSAGE);
         $this->showPagination = $properties->getWidgetProperty(self::PROPERTY_PAGINATION_SHOW);
@@ -1281,6 +1281,9 @@ class ContentProperties {
         $properties->setWidgetProperty(self::PROPERTY_FORMAT_IMAGE, $this->contentImageFormat);
         $properties->setWidgetProperty(self::PROPERTY_FORMAT_DATE, $this->contentDateFormat);
         $properties->setLocalizedWidgetProperty($locale, self::PROPERTY_TITLE, $this->title);
+        if (isset($this->titleString)) {
+            $properties->setLocalizedWidgetProperty($locale, self::PROPERTY_TITLE, $this->titleString);
+        }
         $properties->setWidgetProperty(self::PROPERTY_EMPTY_RESULT_VIEW, $this->emptyResultView ? '1' : '0');
         $properties->setLocalizedWidgetProperty($locale, self::PROPERTY_EMPTY_RESULT_MESSAGE, $this->emptyResultMessage);
         $properties->setWidgetProperty(self::PROPERTY_META_OG, $this->metaOg);
@@ -1288,7 +1291,7 @@ class ContentProperties {
         $properties->setWidgetProperty(self::PROPERTY_FORMAT_TEASER_OG, $this->ogTeaserFormat);
         $properties->setWidgetProperty(self::PROPERTY_FORMAT_IMAGE_OG, $this->ogImageFormat);
         $properties->setWidgetProperty(self::PROPERTY_BREADCRUMB, $this->breadcrumb ? '1' : '0');
-        
+
         $parameters = $this->parameters;
         if ($parameters) {
             if (is_array($parameters)) {

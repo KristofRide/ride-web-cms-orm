@@ -70,15 +70,18 @@ class ContentEntryWidget extends ContentDetailWidget {
             $query = $this->getModelQuery($contentProperties, $this->locale, $id);
 
             $content = $this->getResult($contentProperties, $contentService, $query);
+
             if ($content && $content->data instanceof LocalizedEntry && !$content->data->isLocalized() && !$contentProperties->getIncludeUnlocalized()) {
                 $content = null;
             }
 
-            if (!$content) {
-                return;
-            }
+//            if (!$content) {
+//                return;
+//            }
 
-           $result[] =  $content; //$this->setContext('orm.entry.' . $id, $content);
+            if ($content) {
+                $result[] =  $content; //$this->setContext('orm.entry.' . $id, $content);
+            }
 
         }
         $this->setContext('orm.entries.' . $this->id, $result);

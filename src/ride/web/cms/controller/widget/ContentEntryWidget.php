@@ -85,9 +85,10 @@ class ContentEntryWidget extends ContentDetailWidget {
 
         }
         $this->setContext('orm.entries.' . $this->id, $result);
-
-        if (array_count_values($contentProperties->getEntriesId()) == 1) {
+        if (count($result) == 1) {
+            $content = array_shift($result);
             if ($contentProperties->getBreadcrumb()) {
+
                 $url = $this->request->getBaseScript() . $this->properties->getNode()->getRoute($this->locale) . '/' . $id;
                 $this->addBreadcrumb($url, $content->title);
             }

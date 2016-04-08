@@ -1006,7 +1006,7 @@ class ContentProperties {
      * @return null
      */
     public function setTitle($title) {
-        $this->titleString = $title;
+        $this->title = $title;
     }
 
     /**
@@ -1014,7 +1014,7 @@ class ContentProperties {
      * @return string
      */
     public function getTitle() {
-        return $this->titleString;
+        return $this->title;
     }
 
     /**
@@ -1179,7 +1179,8 @@ class ContentProperties {
         $this->contentTeaserFormat = $properties->getWidgetProperty(self::PROPERTY_FORMAT_TEASER);
         $this->contentImageFormat = $properties->getWidgetProperty(self::PROPERTY_FORMAT_IMAGE);
         $this->contentDateFormat = $properties->getWidgetProperty(self::PROPERTY_FORMAT_DATE);
-        $this->titleString = $properties->getLocalizedWidgetProperty($locale, self::PROPERTY_TITLE);
+        $this->title = $properties->getLocalizedWidgetProperty($locale, self::PROPERTY_TITLE);
+        $this->titleString = $properties->getLocalizedWidgetProperty($locale, self::PROPERTY_TITLE_STRING);
         $this->emptyResultView = $properties->getWidgetProperty(self::PROPERTY_EMPTY_RESULT_VIEW, true);
         $this->emptyResultMessage = $properties->getLocalizedWidgetProperty($locale, self::PROPERTY_EMPTY_RESULT_MESSAGE);
         $this->showPagination = $properties->getWidgetProperty(self::PROPERTY_PAGINATION_SHOW);
@@ -1232,6 +1233,7 @@ class ContentProperties {
      * @return null
      */
     public function setToWidgetProperties(WidgetProperties $properties, $locale) {
+
         $fields = null;
         if ($this->modelFields) {
             $fields = implode(self::SEPARATOR, $this->modelFields);
@@ -1281,8 +1283,9 @@ class ContentProperties {
         $properties->setWidgetProperty(self::PROPERTY_FORMAT_IMAGE, $this->contentImageFormat);
         $properties->setWidgetProperty(self::PROPERTY_FORMAT_DATE, $this->contentDateFormat);
         $properties->setLocalizedWidgetProperty($locale, self::PROPERTY_TITLE, $this->title);
+      
         if (isset($this->titleString)) {
-            $properties->setLocalizedWidgetProperty($locale, self::PROPERTY_TITLE, $this->titleString);
+            $properties->setLocalizedWidgetProperty($locale, self::PROPERTY_TITLE_STRING, $this->titleString);
         }
         $properties->setWidgetProperty(self::PROPERTY_EMPTY_RESULT_VIEW, $this->emptyResultView ? '1' : '0');
         $properties->setLocalizedWidgetProperty($locale, self::PROPERTY_EMPTY_RESULT_MESSAGE, $this->emptyResultMessage);

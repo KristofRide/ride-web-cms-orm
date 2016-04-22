@@ -6,6 +6,7 @@ use ride\library\cms\content\Content;
 use ride\library\i18n\I18n;
 use ride\library\orm\definition\ModelTable;
 use ride\library\orm\entry\format\EntryFormatter;
+use ride\library\orm\entry\LocalizedEntry;
 use ride\library\orm\OrmManager;
 use ride\library\reflection\ReflectionHelper;
 use ride\library\router\Route;

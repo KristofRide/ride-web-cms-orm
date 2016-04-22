@@ -503,56 +503,60 @@ class ContentOverviewWidget extends AbstractWidget implements StyleWidget {
             return $translator->translate('label.widget.properties.unset');
         }
 
-        $preview = '<strong>' . $translator->translate('label.model') . '</strong>: ' . $modelName . '<br />';
+        $preview = '<strong>' . $translator->translate('label.model') . '</strong>: ' . $translator->translate('title.' . strtolower($modelName)) . '<br />';
+        if ($this->getSecurityManager()->isPermissionGranted('cms.widget.advanced.view')) {
 
-        $fields = $contentProperties->getModelFields();
-        if ($fields) {
-            $preview .= '<strong>' . $translator->translate('label.fields') . '</strong>: ' . implode(', ', $fields) . '<br />';
-        }
-
-        $recursiveDepth = $contentProperties->getRecursiveDepth();
-        if ($recursiveDepth) {
-            $preview .= '<strong>' . $translator->translate('label.depth.recursive') . '</strong>: ' . $recursiveDepth . '<br />';
-        }
-
-        $includeUnlocalized = $contentProperties->getIncludeUnlocalized();
-        if ($includeUnlocalized) {
-            $preview .= '<strong>' . $translator->translate('label.unlocalized') . '</strong>: ' . $translator->translate('label.yes') . '<br />';
-        } else {
-            $preview .= '<strong>' . $translator->translate('label.unlocalized') . '</strong>: ' . $translator->translate('label.no') . '<br />';
-        }
-
-        $condition = $contentProperties->getCondition();
-        if ($condition) {
-            $preview .= '<strong>' . $translator->translate('label.condition') . '</strong>: ' . $condition . '<br />';
-        }
-
-        $filters = $contentProperties->getFilters();
-        if ($filters) {
-            foreach ($filters as $index => $filter) {
-                $filters[$index] = '<li>' . $filter['name'] . ': ' . $translator->translate('label.content.overview.filter.' . $filter['type']) . ' (' . $filter['field'] . ')</li>';
+            $fields = $contentProperties->getModelFields();
+            if ($fields) {
+                $preview .= '<strong>' . $translator->translate('label.fields') . '</strong>: ' . implode(', ', $fields) . '<br />';
             }
 
-            $preview .= '<strong>' . $translator->translate('label.filters') . '</strong>: <ul>' . implode('', $filters) . '</ul>';
-        }
-        $preview .= '<strong>' . $translator->translate('label.search.expose') . '</strong>: ' . $translator->translate($contentProperties->hasSearch() ? 'label.yes' : 'label.no') . '<br />';
+            $recursiveDepth = $contentProperties->getRecursiveDepth();
+            if ($recursiveDepth) {
+                $preview .= '<strong>' . $translator->translate('label.depth.recursive') . '</strong>: ' . $recursiveDepth . '<br />';
+            }
 
-        $order = $contentProperties->getOrder();
-        if ($order) {
-            $preview .= '<strong>' . $translator->translate('label.order') . '</strong>: ' . $order . '<br />';
-        }
+            $includeUnlocalized = $contentProperties->getIncludeUnlocalized();
+            if ($includeUnlocalized) {
+                $preview .= '<strong>' . $translator->translate('label.unlocalized') . '</strong>: ' . $translator->translate('label.yes') . '<br />';
+            } else {
+                $preview .= '<strong>' . $translator->translate('label.unlocalized') . '</strong>: ' . $translator->translate('label.no') . '<br />';
+            }
 
-        if ($contentProperties->isPaginationEnabled()) {
-            $parameters = array(
-                'rows' => $contentProperties->getPaginationRows(),
-                'offset' => $contentProperties->getPaginationOffset(),
-            );
+            $condition = $contentProperties->getCondition();
+            if ($condition) {
+                $preview .= '<strong>' . $translator->translate('label.condition') . '</strong>: ' . $condition . '<br />';
+            }
 
-            $preview .= $translator->translate('label.pagination.description', $parameters) . '<br />';
-        }
+            $filters = $contentProperties->getFilters();
+            if ($filters) {
+                foreach ($filters as $index => $filter) {
+                    $filters[$index] = '<li>' . $filter['name'] . ': ' . $translator->translate('label.content.overview.filter.' . $filter['type']) . ' (' . $filter['field'] . ')</li>';
+                }
 
-        $preview .= '<strong>' . $translator->translate('label.template') . '</strong>: ' . $this->getTemplate(static::TEMPLATE_NAMESPACE . '/block') . '<br>';
+                $preview .= '<strong>' . $translator->translate('label.filters') . '</strong>: <ul>' . implode('', $filters) . '</ul>';
+            }
+            $preview .= '<strong>' . $translator->translate('label.search.expose') . '</strong>: ' . $translator->translate($contentProperties->hasSearch() ? 'label.yes' : 'label.no') . '<br />';
+        }    
+            $order = $contentProperties->getOrder();
+            if ($order) {
+                $preview .= '<strong>' . $translator->translate('label.order') . '</strong>: ' . $order . '<br />';
+            }
+        if ($this->getSecurityManager()->isPermissionGranted('cms.widget.advanced.view')) {
+            if ($contentProperties->isPaginationEnabled()) {
+                $parameters = array(
+                    'rows' => $contentProperties->getPaginationRows(),
+                    'offset' => $contentProperties->getPaginationOffset(),
+                );
 
+                $preview .= $translator->translate('label.pagination.description', $parameters) . '<br />';
+            }
+
+            $preview .= '<strong>' . $translator->translate('label.template') . '</strong>: ' . $this->getTemplate(static::TEMPLATE_NAMESPACE . '/block') . '<br>';
+
+        }    
+        
+            
         return $preview;
     }
 
